@@ -1,0 +1,15 @@
+import { Router } from 'express';
+import { auth, role } from '../middleware/auth.js';
+import * as c from '../controllers/satelliteController.js';
+const r = Router();
+r.use(auth);
+r.get('/', c.list);
+r.get('/logs/all', c.logs);
+r.post('/import', role('admin', 'operator'), c.importSatellite);
+r.post('/', role('admin'), c.create);
+r.get('/:id', c.get);
+r.delete('/:id', role('admin'), c.remove);
+r.post('/:id/simulate', role('admin', 'operator'), c.simulate);
+r.get('/:id/telemetry', c.telemetry);
+r.post('/:id/commands', role('admin', 'operator'), c.commands);
+export default r;

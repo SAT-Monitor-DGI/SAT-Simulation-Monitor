@@ -1,70 +1,63 @@
-# GitHub Codespaces ♥️ React
+# Satellite Management System
 
-Welcome to your shiny new Codespace running React! We've got everything fired up and running for you to explore React.
+A small React and Node.js project for importing, viewing, and simulating satellites by NORAD ID.
 
-You've got a blank canvas to work on from a git perspective as well. There's a single initial commit with the what you're seeing right now - where you go from here is up to you!
+## Run
 
-Everything you do here is contained within this one codespace. There is no repository on GitHub yet. If and when you’re ready you can click "Publish Branch" and we’ll create your repository and push up your project. If you were just exploring then and have no further need for this code then you can simply delete your codespace and it's gone forever.
+### Server
 
-This project was bootstrapped for you with [Vite](https://vitejs.dev/).
+```bash
+cd server
+bun install
+cp .env.example .env
+bun dev
+```
 
-## Available Scripts
+The API runs on `http://localhost:5000`. Set `MONGO_URI`, `JWT_SECRET`, and `CORS_ALLOWED_HOST` in `.env`.
 
-In the project directory, you can run:
+### Client
 
-### `npm start`
+```bash
+cd client
+bun install
+bun dev
+```
 
-We've already run this for you in the `Codespaces: server` terminal window below. If you need to stop the server for any reason you can just run `npm start` again to bring it back online.
+The frontend runs on `http://localhost:3000`.
 
-Runs the app in the development mode.\
-Open [http://localhost:3000/](http://localhost:3000/) in the built-in Simple Browser (`Cmd/Ctrl + Shift + P > Simple Browser: Show`) to view your running application.
+## Backend
 
-The page will reload automatically when you make changes.\
-You may also see any lint errors in the console.
+### Auth controller
 
-### `npm test`
+The auth controller registers the first admin user, hashes passwords with bcrypt, and logs users in with username and password. Successful login returns a JWT containing the user ID, username, and role.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Satellite controller
 
-### `npm run build`
+The satellite controller lists and imports satellites using a NORAD ID, stores orbital data and TLE information, starts or stops SGP4 simulation, and returns telemetry and satellite logs.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+## MongoDB models
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+- **User**: username, hashed password, and role (`admin` or `operator`).
+- **Satellite**: name, NORAD ID, source, TLE, orbital parameters, simulation state, and latest position.
+- **TelemetryLog**: satellite reference, temperature, battery, signal, position, altitude, velocity, and timestamp.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+## Frontend
 
-## Learn More
+The login page authenticates users and keeps the JWT and user data in browser storage. The dashboard imports satellites, shows telemetry, starts or stops simulation, and displays satellite positions on a Leaflet map or interactive 3D globe with country boundaries.
 
-You can learn more in the [Vite documentation](https://vitejs.dev/guide/).
+## Tests
 
-To learn Vitest, a Vite-native testing framework, go to [Vitest documentation](https://vitest.dev/guide/)
+Frontend tests use **Jest** and **React Testing Library** for the login form and telemetry card.
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Backend tests use **Jest** and **Supertest** for the health/protected API endpoints and orbit propagation.
 
-### Code Splitting
+```bash
+cd client && bun test
+cd server && bun test
+```
 
-This section has moved here: [https://sambitsahoo.com/blog/vite-code-splitting-that-works.html](https://sambitsahoo.com/blog/vite-code-splitting-that-works.html)
+Formatting checks use Prettier:
 
-### Analyzing the Bundle Size
-
-This section has moved here: [https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer](https://github.com/btd/rollup-plugin-visualizer#rollup-plugin-visualizer)
-
-### Making a Progressive Web App
-
-This section has moved here: [https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf](https://dev.to/hamdankhan364/simplifying-progressive-web-app-pwa-development-with-vite-a-beginners-guide-38cf)
-
-### Advanced Configuration
-
-This section has moved here: [https://vitejs.dev/guide/build.html#advanced-base-options](https://vitejs.dev/guide/build.html#advanced-base-options)
-
-### Deployment
-
-This section has moved here: [https://vitejs.dev/guide/build.html](https://vitejs.dev/guide/build.html)
-
-### Troubleshooting
-
-This section has moved here: [https://vitejs.dev/guide/troubleshooting.html](https://vitejs.dev/guide/troubleshooting.html)
+```bash
+bun run lint
+```

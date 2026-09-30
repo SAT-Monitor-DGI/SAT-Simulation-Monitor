@@ -1,0 +1,77 @@
+.view-switch {
+  display: flex;
+  gap: 4px;
+  background: #081522;
+  border: 1px solid #26435a;
+  border-radius: 10px;
+  padding: 3px;
+}
+.view-switch button {
+  background: transparent;
+  color: #8fa5bc;
+  padding: 7px 11px;
+  font-size: 12px;
+}
+.view-switch button.active {
+  background: #2d7ff9;
+  color: #fff;
+}
+.globe {
+  height: 560px;
+  border-radius: 10px;
+  overflow: hidden;
+  cursor: grab;
+}
+.globe-shell {
+  position: relative;
+}
+.globe-selection {
+  position: absolute;
+  left: 16px;
+  bottom: 16px;
+  display: grid;
+  gap: 3px;
+  min-width: 150px;
+  padding: 10px 12px;
+  background: #07111fcc;
+  border: 1px solid #3c7183;
+  border-radius: 8px;
+  pointer-events: none;
+}
+.globe-selection span {
+  color: #8fa5bc;
+  font-size: 12px;
+}
+.globe:active {
+  cursor: grabbing;
+}
+.globe canvas {
+  display: block;
+  height: 100%;
+  width: 100%;
+  touch-action: none;
+}
+@media (max-width: 900px) {
+  .toolbar {
+    flex-wrap: wrap;
+  }
+  .toolbar form {
+    width: 100%;
+  }
+  .toolbar form input {
+    flex: 1;
+  }
+  .map-panel {
+    min-height: 0;
+  }
+  .map,
+  .globe {
+    height: 420px;
+  }
+  .section-title {
+    gap: 12px;
+  }
+  .section-title h2 {
+    font-size: 18px;
+  }
+}
