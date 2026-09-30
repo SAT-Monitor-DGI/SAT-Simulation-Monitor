@@ -18,5 +18,7 @@ app.use(express.json());
 app.get('/api/health', (req, res) => res.json({ ok: true }));
 app.use('/api/auth', auth);
 app.use('/api/satellites', satellites);
+app.use('/auth', auth);
+app.use('/satellites', satellites);
 app.use((err, req, res, next) => res.status(500).json({ message: err.message }));
 export default app;
