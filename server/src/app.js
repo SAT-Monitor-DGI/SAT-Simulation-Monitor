@@ -27,5 +27,7 @@ app.get('/api/health', (req, res) =>
 
 app.use('/api/auth', auth);
 app.use('/api/satellites', satellites);
+app.use('/auth', auth);
+app.use('/satellites', satellites);
 app.use((err, req, res, next) => res.status(500).json({ message: err.message }));
 export default app;

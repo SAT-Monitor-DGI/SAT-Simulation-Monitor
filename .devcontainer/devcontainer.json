@@ -20,7 +20,10 @@
     "3000": {
       "label": "Application",
       "onAutoForward": "openPreview"
+    },
+    "5000": {
+      "label": "API"
     }
   },
-  "forwardPorts": [3000]
+  "forwardPorts": [3000, 5000]
 }
