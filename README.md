@@ -25,6 +25,22 @@ bun dev
 
 The frontend runs on `http://localhost:3000`.
 
+## External deployment
+
+When the frontend and backend use different domains, set the frontend variable at build time:
+
+```env
+VITE_API_URL=https://your-backend.vercel.app/api
+```
+
+Set the backend variable to the exact frontend origin:
+
+```env
+CORS_ALLOWED_HOST=https://your-frontend.vercel.app
+```
+
+`VITE_API_URL=/api` is only for local development through the Vite proxy. Deploy the `server` folder as the Vercel project root; its `vercel.json` points Vercel to the Node entrypoint.
+
 ## Backend
 
 ### Auth controller

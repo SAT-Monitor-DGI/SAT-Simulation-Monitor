@@ -3,7 +3,10 @@ import cors from 'cors';
 import auth from './routes/auth.js';
 import satellites from './routes/satellites.js';
 const app = express();
-const whitelist = [process.env.CORS_ALLOWED_HOST, 'http://localhost:3000'].filter(Boolean);
+const whitelist = [process.env.CORS_ALLOWED_HOST, 'http://localhost:3000']
+  .flatMap((origin) => origin?.split(',') || [])
+  .map((origin) => origin.trim())
+  .filter(Boolean);
 const corsOptions = {
   origin(origin, callback) {
     if (!origin || whitelist.includes(origin)) return callback(null, true);
