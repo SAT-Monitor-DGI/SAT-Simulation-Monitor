@@ -3,13 +3,19 @@ import cors from 'cors';
 import auth from './routes/auth.js';
 import satellites from './routes/satellites.js';
 const app = express();
-const whitelist = [process.env.CORS_ALLOWED_HOST, 'http://localhost:3000']
+const normalizeOrigin = (origin) => origin?.trim().replace(/\/$/, '');
+const whitelist = [
+  process.env.CORS_ALLOWED_HOST,
+  process.env.VERCEL_URL && `https://${process.env.VERCEL_URL}`,
+  process.env.VERCEL_BRANCH_URL && `https://${process.env.VERCEL_BRANCH_URL}`,
+  'http://localhost:3000',
+]
   .flatMap((origin) => origin?.split(',') || [])
-  .map((origin) => origin.trim())
+  .map(normalizeOrigin)
   .filter(Boolean);
 const corsOptions = {
   origin(origin, callback) {
-    if (!origin || whitelist.includes(origin)) return callback(null, true);
+    if (!origin || whitelist.includes(normalizeOrigin(origin))) return callback(null, true);
     return callback(new Error('Not allowed by CORS'));
   },
 };
