@@ -21,7 +21,10 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
-app.get('/api/health', (req, res) => res.json({ ok: true }));
+app.get('/api/health', (req, res) =>
+  res.json({ ok: true, database: 'available on demand' }),
+);
+
 app.use('/api/auth', auth);
 app.use('/api/satellites', satellites);
 app.use('/auth', auth);
