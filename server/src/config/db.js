@@ -27,3 +27,12 @@ export async function connectDB() {
     throw error;
   }
 }
+
+export async function ensureDB(req, res, next) {
+  try {
+    await connectDB();
+    next();
+  } catch (error) {
+    next(error);
+  }
+}

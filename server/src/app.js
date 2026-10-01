@@ -21,6 +21,7 @@ const corsOptions = {
 };
 app.use(cors(corsOptions));
 app.use(express.json());
+app.get('/', (req, res) => res.json({ ok: true }));
 app.get('/api/health', (req, res) =>
   res.json({ ok: true, database: 'available on demand' }),
 );
@@ -29,5 +30,8 @@ app.use('/api/auth', auth);
 app.use('/api/satellites', satellites);
 app.use('/auth', auth);
 app.use('/satellites', satellites);
-app.use((err, req, res, next) => res.status(500).json({ message: err.message }));
+app.use((err, req, res, next) => {
+  const status = err.message === 'Not allowed by CORS' ? 403 : 500;
+  res.status(status).json({ message: err.message });
+});
 export default app;

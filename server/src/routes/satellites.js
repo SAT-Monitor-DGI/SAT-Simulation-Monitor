@@ -1,10 +1,10 @@
 import { Router } from 'express';
 import { auth, role } from '../middleware/auth.js';
 import * as c from '../controllers/satelliteController.js';
-import { connectDB } from '../config/db.js';
+import { ensureDB } from '../config/db.js';
 const r = Router();
 r.use(auth);
-r.use(connectDB);
+r.use(ensureDB);
 r.get('/', c.list);
 r.get('/logs/all', c.logs);
 r.post('/import', role('admin', 'operator'), c.importSatellite);
