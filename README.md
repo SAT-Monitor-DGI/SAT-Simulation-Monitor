@@ -1,6 +1,6 @@
 # Satellite Management System
 
-A small React and Node.js project for importing, viewing, and simulating satellites by NORAD ID.
+A React and Node.js project for importing, viewing, and simulating satellites by NORAD ID.
 
 ## Run
 
